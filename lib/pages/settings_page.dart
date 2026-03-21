@@ -8,45 +8,104 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
+    final isDark = themeProvider.isDarkMode;
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Settings"),
-        backgroundColor: Theme.of(context).colorScheme.surface,
-      ),
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: Theme.of(context).colorScheme.background,
+
       body: Column(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.secondary,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            margin: const EdgeInsets.only(left: 25, right: 25, top: 10),
-            padding: const EdgeInsets.all(25),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                //dark mode
-                Text(
-                  "Dark Mode",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.inversePrimary,
+          // HEADER
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 16, vertical: 10),
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.arrow_back_ios_new_rounded,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onBackground),
+                    onPressed: () => Navigator.pop(context),
                   ),
-                ),
-                CupertinoSwitch(
-                  value: Provider.of<ThemeProvider>(
-                    context,
-                    listen: false,
-                  ).isDarkMode,
-                  onChanged: (value) => {
-                    Provider.of<ThemeProvider>(
-                      context,
-                      listen: false,
-                    ).toggleTheme(),
-                  },
-                ),
-              ],
+                  Text(
+                    "Settings ⚙️",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color:
+                          Theme.of(context).colorScheme.onBackground,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 20),
+
+          // CARD
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  if (!isDark)
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 20,
+                      offset: const Offset(0, 10),
+                    )
+                ],
+              ),
+
+              child: Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withOpacity(0.2),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.dark_mode,
+                      color:
+                          Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+
+                  const SizedBox(width: 12),
+
+                  Expanded(
+                    child: Text(
+                      "Dark Mode",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface,
+                      ),
+                    ),
+                  ),
+
+                  CupertinoSwitch(
+                    value: themeProvider.isDarkMode,
+                    onChanged: (value) {
+                      themeProvider.toggleTheme();
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ],

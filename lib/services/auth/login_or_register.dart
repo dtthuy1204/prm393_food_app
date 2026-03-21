@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:prm393_food_app/pages/login_page.dart';
-import 'package:prm393_food_app/pages/register_page.dart';
+import '../../pages/login_page.dart';
+import '../../pages/register_page.dart';
 
 class LoginOrRegister extends StatefulWidget {
   const LoginOrRegister({super.key});
@@ -10,7 +10,7 @@ class LoginOrRegister extends StatefulWidget {
 }
 
 class _LoginOrRegisterState extends State<LoginOrRegister> {
-  //initially show login page
+  //initially, show login page
   bool showLoginPage = true;
 
   //toggle between login and register page
@@ -19,16 +19,13 @@ class _LoginOrRegisterState extends State<LoginOrRegister> {
       showLoginPage = !showLoginPage;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     if (showLoginPage) {
-      return LoginPage(
-        onTap: togglePages,
-      );
+      return LoginPage(onTap: togglePages);
     } else {
-      return RegisterPage(
-        onTap: togglePages,
-      );
+      return RegisterPage(onTap: togglePages);
     }
   }
 }

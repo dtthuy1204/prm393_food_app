@@ -5,32 +5,82 @@ class MyDescriptionBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //textstyle
-    var myPrimaryTextStyle = TextStyle(
-      color: Theme.of(context).colorScheme.inversePrimary,
-    );
-
-    var mySecondaryTextStyle = TextStyle(
-      color: Theme.of(context).colorScheme.primary,
-    );
-
     return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      padding: const EdgeInsets.all(16),
+
       decoration: BoxDecoration(
-        border: Border.all(color: Theme.of(context).colorScheme.secondary),
-        borderRadius: BorderRadius.circular(8),
+        color: Colors.white.withOpacity(0.9),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 12,
+            offset: const Offset(0, 6),
+          )
+        ],
       ),
-      padding: const EdgeInsets.all(25),
-      margin: const EdgeInsets.only(left: 25, right: 25, bottom: 25),
+
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          //delivery frr
-          Column(children: [Text('\$0.99', style: myPrimaryTextStyle,), Text('Delivery fee', style: mySecondaryTextStyle,)]),
 
-          //delivery time
-          Column(children: [Text('15-30 min', style: myPrimaryTextStyle,), Text('Delivery time', style: mySecondaryTextStyle,)]),
+          // 🚚 Delivery fee
+          _buildItem(
+            icon: Icons.delivery_dining,
+            title: "\$0.99",
+            subtitle: "Delivery fee",
+          ),
+
+          // ⏱ Delivery time
+          _buildItem(
+            icon: Icons.access_time,
+            title: "15 - 30 min",
+            subtitle: "Delivery time",
+          ),
         ],
       ),
+    );
+  }
+
+  Widget _buildItem({
+    required IconData icon,
+    required String title,
+    required String subtitle,
+  }) {
+    return Row(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Colors.pink.shade100,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Icon(icon, color: Colors.white, size: 18),
+        ),
+
+        const SizedBox(width: 10),
+
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              ),
+            ),
+            Text(
+              subtitle,
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.grey[600],
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
